@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<title></title>
+		<script src="js/angular.min.js"></script>
+		<script src="js/angular-route.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				padding: 0;
+				border: 0;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			img {
+				display: block;
+				border: 0;
+				vertical-align: middle;
+			}
+			
+			i,
+			em,
+			b,
+			strong {
+				font-style: normal;
+			}
+			
+			footer {
+				height: 50px;
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				border-top: 1px solid #999;
+			}
+			
+			footer ul {
+				display: flex;
+				height: 100%;
+			}
+			
+			footer ul li {
+				flex: 1;
+				display: flex;
+				height: 100%;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+		</style>
+	</head>
+
+	<body ng-controller="mainCtrl">
+		<header>
+			<h1>这是头部标题</h1>
+		</header>
+		<div ng-view></div>
+		<footer>
+
+			<ul>
+				<li>
+					<a href="#/">首页</a>
+				</li>
+				<li>
+					<a href="#/list/listPage">分类</a>
+				</li>
+				<li>
+					<a href="#/list/morePage">购物车</a>
+				</li>
+				<li>
+					<a href="#/list/myShowPage">我的秀</a>
+				</li>
+				<li>
+					<a href="#/list/shopCartPage">更多</a>
+				</li>
+			</ul>
+		</footer>
+		<script type="text/javascript">
+			var myApp = angular.module('myApp', ['ngRoute']);
+			myApp.config(['$routeProvider', function($routeProvider) {
+				//重定向到url上只是url里面字符串改变
+				$routeProvider
+					.when('/', {
+						templateUrl: 'index.html',
+						controller: 'homeCtrl',
+						//controllerAs: 'classify', //为controller指定别名
+					})
+					.when('/list/listPage', {
+						templateUrl: 'list/listPage.html',
+						controller: 'listCtrl',
+						//controllerAs: 'classify', //为controller指定别名
+					})
+					.when('/list/morePage', {
+						templateUrl: 'list/morePage.html',
+						controller: 'shopCartCtrl',
+					})
+					.when('/list/myShowPage', {
+						templateUrl: 'list/myShowPage.html',
+						controller: 'myShowCtrl', //function,string或数组类型,在当前模板上执行的controller函数，生成新的scope
+					})
+					.when('/list/shopCartPage', {
+						templateUrl: 'list/shopCartPage.html',
+						controller: 'moreCtrl',
+					})
+
+				.otherwise({
+					//重定向到url上只是url里面字符串改变
+					redirectTo: '/', //重定向地址
+				})
+			}])
+			myApp.controller('mainCtrl', ['$scope', '$location', "$window", '$timeout', function($scope, $location, $window, $timeout) {
+
+			}])
+			myApp.controller('homeCtrl', ['$location', function($location) {
+				console.log("homeCtrl");
+			}])
+			myApp.controller('listCtrl', ['$location', function($location) {
+				console.log("listCtrl");
+				this.name = "listPAge";
+			}])
+			myApp.controller('shopCartCtrl', ['$scope', '$location', function($scope, $location) {
+				console.log("shopCartCtrl");
+			}])
+			myApp.controller('myShowCtrl', ['$scope', function($scope) {
+
+				console.log("myShowCtrl");
+			}])
+			myApp.controller('moreCtrl', ['$scope', function($scope) {
+				console.log("moreCtrl");
+
+			}])
+		</script>
+	</body>
+
+</html>
